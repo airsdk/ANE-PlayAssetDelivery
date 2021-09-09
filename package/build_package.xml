@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<project default="build" name="airpackage"
+	xmlns:if="ant:if"
+	xmlns:unless="ant:unless"> 
+
+
+	<dirname property="airpackage.basedir" file="${ant.file.airpackage}" />
+	<property name="common.basedir" value="${airpackage.basedir}/.." />
+
+	<property file="${common.basedir}/version.config" description="version properties" />
+	<property file="${common.basedir}/build.config" description="build properties" />
+
+	<property name="version.release" value="${version_release_major}.${version_release_minor}.${version_release_build}" if:set="version_release_major" />
+	<property name="version.release" value="${version_major}.${version_minor}.${version_build}" />
+	<property name="version" value="${version_major}.${version_minor}.${version_build}" />
+	<tstamp>
+		<format property="publish_date" pattern="yyyy-MM-dd" locale="en,UK" />
+	</tstamp>
+
+	<target name="clean" >
+		<delete includeemptydirs="true">
+			<fileset dir="${airpackage.basedir}">
+				<include name="**/build/**" />
+				<include name="**/*.airpackage" />
+			</fileset>
+		</delete>
+	</target>
+
+
+	<target name="copy" >
+		<copy todir="${airpackage.basedir}/${output.dir}/ane" flatten="true" overwrite="true" >
+			<fileset dir="${common.basedir}/${output.dir}">
+				<include name="*.ane" />
+			</fileset>
+		</copy>
+		<copy todir="${airpackage.basedir}/${output.dir}" overwrite="true" >
+			<fileset dir="${common.basedir}">
+				<include name="CHANGELOG.md" />
+				<include name="README.md" />
+			</fileset> 
+		</copy>
+		<copy todir="${airpackage.basedir}/${output.dir}" overwrite="true" >
+			<fileset dir="${airpackage.basedir}">
+				<include name="package.json" />
+				<include name="CHANGELOG.md" />
+				<include name="README.md" />
+				<include name="assets/**" />
+				<include name="platforms/**" />
+			</fileset> 
+			<filterchain>
+				<tokenfilter>
+					<replacestring from="@NAME@" to="${airpackage.name}"/>
+					<replacestring from="@DESCRIPTION@" to="${airpackage.description}"/>
+					<replacestring from="@GITHUB_REPO@" to="${github.repo}"/>
+					<replacestring from="@VERSION@" to="${version}"/>
+					<replacestring from="@VERSIONRELEASE@" to="${version.release}"/>
+					<replacestring from="@EXTENSIONID@" to="${output.name}"/>
+					<replacestring from="@ANDROIDPACKAGE@" to="${package.name}"/>
+					<replacestring from="@DATE@" to="${publish_date}"/>
+				</tokenfilter>
+			</filterchain>
+		</copy>
+	</target>
+
+
+	<!-- BUILD -->
+
+	<target name="build" depends="clean" >
+		<antcall target="copy" />
+		<exec executable="apm" dir="${airpackage.basedir}">
+			<arg line="build build" />
+		</exec>
+	</target>
+
+
+	<!-- DEPLOY -->
+
+	<target name="deploy" depends="build">
+		<foreach target="deploy_package" param="packagefile" inheritall="true">
+			<path>
+				<fileset dir="${airpackage.basedir}">
+					<include name="**/**/*.airpackage"/>
+				</fileset>
+			</path>
+		</foreach>
+	</target>
+
+	<target name="deploy_package" >
+		<echo message="deploying to ${github.repo} v${version.release} ${packagefile}" />
+		<!-- Upload to github release -->
+		<exec executable="gh" failonerror="true">
+			<arg line="-R ${github.repo} release upload v${version.release}" />
+			<arg line="${packagefile}" />
+			<arg line="--clobber" />
+		</exec>
+		<!-- Publish to apm repository -->
+		<exec executable="apm">
+			<arg line="publish ${packagefile}" />
+		</exec>
+	</target>
+
+
+
+
+</project>

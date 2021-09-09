@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<project default="build" > 
+
+    <property name="package.antfile" value="package/build_package.xml" />
+
+    <target name="build" >
+        <ant antfile="${package.antfile}" target="build"/>
+    </target> 
+
+    <target name="deploy" >
+        <ant antfile="${package.antfile}" target="deploy"/>
+    </target> 
+
+    <target name="clean" >
+        <ant antfile="${package.antfile}" target="clean"/>
+    </target> 
+
+</project>
