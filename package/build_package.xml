@@ -5,6 +5,13 @@
 	xmlns:unless="ant:unless"> 
 
 
+	<taskdef resource="net/sf/antcontrib/antlib.xml"/>
+	<target name="bootstrap">
+		<mkdir dir="${user.home}/.ant/lib"/>
+		<get dest="${user.home}/.ant/lib/ant-contrib.jar" src="https://search.maven.org/remotecontent?filepath=ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"/>
+	</target>
+
+
 	<dirname property="airpackage.basedir" file="${ant.file.airpackage}" />
 	<property name="common.basedir" value="${airpackage.basedir}/.." />
 
