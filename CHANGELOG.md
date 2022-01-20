@@ -1,3 +1,9 @@
+###### 2022.01.20 [v1.0.2]
+
+```
+Update ANE with fixes for https://github.com/airsdk/Adobe-Runtime-Support/issues/1538
+```
+
 ###### 2021.12.06 [v1.0.1]
 
 ```
