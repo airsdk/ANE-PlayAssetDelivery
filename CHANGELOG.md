@@ -1,3 +1,9 @@
+###### 2022.01.21 [v1.1.0]
+
+```
+Add showCellularDataConfirmation function for handling WAITING_FOR_WIFI (https://github.com/airsdk/Adobe-Runtime-Support/discussions/1581)
+```
+
 ###### 2022.01.20 [v1.0.2]
 
 ```
