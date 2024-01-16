@@ -1,3 +1,11 @@
+###### 2024.01.16 [v1.2.0]
+
+```
+Updating internal architecture to allow multiple ANE instances to be created within an app
+Updating 'removeAssetPack' functionality to return 'pending' if the task is successfully started and dispatching 'not_installed' when it succeeds
+Adding 'debugMode' property to the ANE to enable/disable release-mode debugging of the Java code via logcat
+```
+
 ###### 2022.01.21 [v1.1.0]
 
 ```
