@@ -1,3 +1,11 @@
+###### 2024.04.09 [v1.3.0]
+
+```
+Defensive programming in status event handling to cope with spurious asset updated events.
+Updating implementation of showCellularDataConfirmation to use the new API for this (showConfirmationDialog) - no change to the AS3 API.
+Switching to imports of per-feature Play Asset Delivery library rather than the original Play Core library; and updating the imports for Tasks using Android GMS packages rather than Android Play Core. 
+```
+
 ###### 2024.01.16 [v1.2.0]
 
 ```

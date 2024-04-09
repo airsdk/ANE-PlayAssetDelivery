@@ -7,9 +7,11 @@
   "type": "ane",
   "version": "@VERSION@",
   "sourceUrl": "https://github.com/@GITHUB_REPO@/releases/download/v@VERSIONRELEASE@/@EXTENSIONID@_@VERSION@.airpackage",
-  "publishedAt": "@DATE@T00:00:00.000Z",
+  "publishedAt": "@DATETIME@",
   "dependencies": [
-    "com.google.android.play:1.x.x"
+    "com.distriqt.playservices.Base:18.2.x",
+    "com.google.android.play:2.0.x",
+    "com.jetbrains.kotlin:1.8.x"
   ],
   "parameters": [],
   "tags": [

@@ -24,6 +24,9 @@
 	<tstamp>
 		<format property="publish_date" pattern="yyyy-MM-dd" locale="en,UK" />
 	</tstamp>
+	<tstamp>
+		<format property="publish_date_time" pattern="yyyy-MM-dd'T'HH:mm:ss.000'Z'" locale="en,UK" />
+	</tstamp>
 
 	<target name="clean" >
 		<delete includeemptydirs="true">
@@ -65,6 +68,7 @@
 					<replacestring from="@EXTENSIONID@" to="${output.name}"/>
 					<replacestring from="@ANDROIDPACKAGE@" to="${package.name}"/>
 					<replacestring from="@DATE@" to="${publish_date}"/>
+					<replacestring from="@DATETIME@" to="${publish_date_time}"/>
 				</tokenfilter>
 			</filterchain>
 		</copy>
