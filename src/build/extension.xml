@@ -1,0 +1,37 @@
+<extension xmlns="http://ns.adobe.com/air/extension/50.2">
+  <id>com.harman.PlayAssetDelivery</id>
+  <versionNumber>11</versionNumber>
+  <platforms>
+   <platform name="Android-ARM">
+	  <applicationDeployment>
+		<nativeLibrary>harmanPlayAssetDelivery.jar</nativeLibrary>
+		<initializer>com.harman.PlayAssetDelivery.PlayAssetExtension</initializer>
+		<finalizer>com.harman.PlayAssetDelivery.PlayAssetExtension</finalizer>
+	  </applicationDeployment>
+	</platform>
+	<platform name="Android-ARM64">
+	  <applicationDeployment>
+		<nativeLibrary>harmanPlayAssetDelivery.jar</nativeLibrary>
+		<initializer>com.harman.PlayAssetDelivery.PlayAssetExtension</initializer>
+		<finalizer>com.harman.PlayAssetDelivery.PlayAssetExtension</finalizer>
+	  </applicationDeployment>
+	</platform>
+	<platform name="Android-x86">
+	  <applicationDeployment>
+		<nativeLibrary>harmanPlayAssetDelivery.jar</nativeLibrary>
+		<initializer>com.harman.PlayAssetDelivery.PlayAssetExtension</initializer>
+		<finalizer>com.harman.PlayAssetDelivery.PlayAssetExtension</finalizer>
+	  </applicationDeployment>
+	</platform>
+	<platform name="Android-x64">
+	  <applicationDeployment>
+		<nativeLibrary>harmanPlayAssetDelivery.jar</nativeLibrary>
+		<initializer>com.harman.PlayAssetDelivery.PlayAssetExtension</initializer>
+		<finalizer>com.harman.PlayAssetDelivery.PlayAssetExtension</finalizer>
+	  </applicationDeployment>
+	</platform>
+	<platform name="default">
+	  <applicationDeployment />
+	</platform>
+  </platforms>
+</extension>

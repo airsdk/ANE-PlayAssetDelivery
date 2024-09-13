@@ -1,0 +1,48 @@
+<project name="TestPlayAssetDelivery" default="build">
+
+    <target name="swf">
+		<java fork="true" failonerror="yes" jar="${AIR_SDK_HOME}/lib/mxmlc-cli.jar">
+			<arg value="-load-config=${AIR_SDK_HOME}/frameworks/air-config.xml"/>
+			<arg value="-compiler.external-library-path+=swc/lib/ExtensionLibrary.swc"/>
+			<arg value="-swf-version=50"/>
+			<arg value="-debug=true"/>
+			<arg value="test/Main.as"/>
+			<arg value="-output=test/Main.swf"/>
+		</java>
+	</target>
+
+
+	<!-- Note: needs an Android SDK which should be set via the ANDROID_SDK_ROOT environment variable -->
+	<target name="aab">
+		<property environment="env" />
+		<mkdir dir="test/ane" />
+		<copy file="PlayAssetDelivery.ane" todir="test/ane"/>
+		<java fork="true" failonerror="yes" jar="${AIR_SDK_HOME}/lib/adt.jar">
+			<arg value="-package"/>
+			<arg value="-target"/>
+			<arg value="aab-debug"/>
+			<arg value="TestPlayAssetDelivery"/>
+			<arg value="test/Main-android-descriptor.xml"/>
+			<arg value="-C"/>
+			<arg value="test"/>
+			<arg value="Main.swf"/>
+			<arg value="-C"/>
+			<arg value="test/assetpacks"/>
+			<arg value="."/>
+			<arg value="-extdir"/>
+			<arg value="test/ane"/>
+			<arg value="-platformsdk"/>
+			<arg value="${env.ANDROID_SDK_ROOT}"/>
+		</java>
+
+	</target>
+
+	<target name="build" depends="swf,aab"/>
+	
+	<target name="clean">
+		<delete file="TestPlayAssetDelivery.aab"/>
+		<delete file="test/Main.swf"/>
+		<delete file="test/ane/PlayAssetDelivery.ane"/>
+	</target>
+	
+</project>

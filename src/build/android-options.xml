@@ -1,0 +1,10 @@
+<platform xmlns="http://ns.adobe.com/air/extension/50.2">
+  <gradle>
+    <repositories>
+      <repository>google()</repository>
+    </repositories>
+    <dependencies>
+      <dependency>implementation 'com.google.android.gms:play-services-tasks:18.1.0'</dependency>
+    </dependencies>
+  </gradle>
+</platform>

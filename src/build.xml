@@ -1,0 +1,96 @@
+<project name="PlayAssetDeliveryANE" default="build">
+    <property environment="env"/>
+
+    <target name="config">
+        <fail unless="env.AIR_SDK_HOME" message="AIR_SDK_HOME environment variable needs to be set."/>
+        <property name="AIR_SDK_HOME" value="${env.AIR_SDK_HOME}"/>
+        <fail unless="env.ANDROID_SDK_ROOT" message="ANDROID_SDK_ROOT environment variable needs to be set."/>
+    </target>
+
+    <target name="swc">
+		<ant antfile="swc/build.xml" target="build"/>
+	</target>
+    <target name="swc_clean">
+		<ant antfile="swc/build.xml" target="clean"/>
+	</target>
+    <target name="jar">
+		<ant antfile="android_studio/build.xml" target="build"/>
+	</target>
+    <target name="jar_clean">
+		<ant antfile="android_studio/build.xml" target="clean"/>
+	</target>
+    <target name="test">
+		<ant antfile="test/build.xml" target="build"/>
+	</target>
+    <target name="test_clean">
+		<ant antfile="test/build.xml" target="clean"/>
+	</target>
+
+	<target name="ane">
+		<!-- copy the files to the right places -->
+		<mkdir dir="build/default" />
+		<copy file="swc/lib/library.swf" todir="build/android-platform"/>
+		<copy file="swc/lib/library.swf" todir="build/default"/>
+		<copy file="android_studio/app/build/outputs/aar/unzipped/classes.jar" tofile="build/android-platform/harmanPlayAssetDelivery.jar"/>
+		<!-- run ADT 
+		adt -package -target ane PlayAssetDelivery build\extension.xml -swc swc\lib\ExtensionLibrary.swc -platform Android-ARM -platformoptions build\android-platform.xml -C build\android-platform .
+		.. although no longer using platformoptions, plus we have a default platform now ..
+		It doesn't matter which ADT.jar file we choose..
+		-->
+		<java fork="true" failonerror="yes" jar="${AIR_SDK_HOME}/lib/adt.jar">
+			<arg value="-package"/>
+			<arg value="-target"/>
+			<arg value="ane"/>
+			<arg value="PlayAssetDelivery"/>
+			<arg value="build/extension.xml"/>
+			<arg value="-swc"/>
+			<arg value="swc/lib/ExtensionLibrary.swc"/>
+			<arg value="-platform"/>
+			<arg value="Android-ARM"/>
+			<arg value="-platformoptions"/>
+			<arg value="build/android-options.xml"/>
+			<arg value="-C"/>
+			<arg value="build/android-platform"/>
+			<arg value="."/>
+			<arg value="-platform"/>
+			<arg value="Android-ARM64"/>
+			<arg value="-platformoptions"/>
+			<arg value="build/android-options.xml"/>
+			<arg value="-C"/>
+			<arg value="build/android-platform"/>
+			<arg value="."/>
+			<arg value="-platform"/>
+			<arg value="Android-x86"/>
+			<arg value="-platformoptions"/>
+			<arg value="build/android-options.xml"/>
+			<arg value="-C"/>
+			<arg value="build/android-platform"/>
+			<arg value="."/>
+			<arg value="-platform"/>
+			<arg value="Android-x64"/>
+			<arg value="-platformoptions"/>
+			<arg value="build/android-options.xml"/>
+			<arg value="-C"/>
+			<arg value="build/android-platform"/>
+			<arg value="."/>
+			<arg value="-platform"/>
+			<arg value="default"/>
+			<arg value="-C"/>
+			<arg value="build/default"/>
+			<arg value="."/>
+		</java>
+
+	</target>
+
+	<target name="ane_clean">
+		<delete file="build/android-platform/library.swf"/>
+		<delete file="build/android-platform/harmanPlayAssetDelivery.jar"/>
+		<delete file="build/default/library.swf" />
+		<delete file="PlayAssetDelivery.ane"/>
+	</target>
+
+
+	<target name="build" depends="config,swc,jar,ane,test"/>
+	<target name="clean" depends="swc_clean,jar_clean,ane_clean,test_clean"/>
+	
+</project>

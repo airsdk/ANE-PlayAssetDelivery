@@ -1,0 +1,39 @@
+<project name="Android_Studio" default="build">
+
+	<dirname property="androidstudio.project.dir" file="${ant.file}"/>
+	<property name="ANDROID_AAR_FILE" location="${androidstudio.project.dir}/app/build/outputs/aar/app-release.aar"/>
+	<property name="ANDROID_TEMP_FOLDER" location="${androidstudio.project.dir}/app/build/outputs/aar/unzipped"/>
+	
+	<target name="android_studio">
+		<sequential>
+			<echo>Using gradlew to build Android target</echo>
+			<exec dir="${androidstudio.project.dir}" executable="cmd" osfamily="windows" failonerror="true">
+				<arg line="/c gradlew.bat assembleRelease"/>
+			</exec>
+			<exec dir="${androidstudio.project.dir}" executable="/bin/sh" osfamily="unix"  failonerror="true">
+				<arg line="gradlew assembleRelease"/>
+			</exec>
+		</sequential>
+	</target>
+	
+	<target name="checkAARExists">
+		<available file="${ANDROID_AAR_FILE}"  property="android.aar.exists"/>
+	</target>
+	
+	<target name="extract_classes_jar" if="android.aar.exists">
+		<echo>Got the AAR file...</echo>
+		<mkdir dir="${ANDROID_TEMP_FOLDER}"/>
+		<unzip src="${ANDROID_AAR_FILE}" dest="${ANDROID_TEMP_FOLDER}">
+			<patternset>
+				<include name="**/classes.jar"/>
+			</patternset>
+		</unzip>
+	</target>
+	
+	<target name="build" depends="android_studio,checkAARExists,extract_classes_jar"/>
+
+	<target name="clean">
+		<delete dir="${androidstudio.project.dir}/app/build" />
+	</target>
+	
+</project>
