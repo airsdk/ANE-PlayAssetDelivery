@@ -1,3 +1,9 @@
+###### 2025.06.13 [v1.4.0]
+
+```
+Update airpackage to support latest dependencies
+```
+
 ###### 2024.04.09 [v1.3.0]
 
 ```

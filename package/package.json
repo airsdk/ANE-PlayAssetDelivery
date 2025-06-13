@@ -9,9 +9,10 @@
   "sourceUrl": "https://github.com/@GITHUB_REPO@/releases/download/v@VERSIONRELEASE@/@EXTENSIONID@_@VERSION@.airpackage",
   "publishedAt": "@DATETIME@",
   "dependencies": [
-    "com.distriqt.playservices.Base:18.2.x",
-    "com.google.android.play:2.0.x",
-    "com.jetbrains.kotlin:1.8.x"
+    "com.distriqt.playservices.Base:19.1.x",
+    "com.google.android.play.core:2.0.x",
+    "com.google.android.play.assetdelivery:2.2.x",
+    "com.jetbrains.kotlin:2.0.x"
   ],
   "parameters": [],
   "tags": [
